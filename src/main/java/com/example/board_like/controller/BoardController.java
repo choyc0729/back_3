@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-// 프로젝트에 필요한 클래스들도 함께 추가하세요.
+
 import com.example.board_like.model.Board;
 import com.example.board_like.service.BoardService;
 import com.example.board_like.service.CategoryService;
@@ -25,10 +25,9 @@ public class BoardController {
     @GetMapping("/")
     public String list(Model model) {
         List<Board> boards = boardService.getAllBoards();
-        model.addAttribute("boards", boardService.getAllBoards());
-        return "list";
+        model.addAttribute("boards", boards);
+        return "landing";
     }
-
 
     // 게시물 등록 페이지
     @GetMapping("/new")
@@ -39,7 +38,7 @@ public class BoardController {
     }
 
     // 게시물 등록 처리
-    @PostMapping
+    @PostMapping("/")
     public String create(@ModelAttribute Board board) {
         boardService.saveBoard(board);
         return "redirect:/";
@@ -73,5 +72,21 @@ public class BoardController {
     public String dislikeBoard(@PathVariable Long id) {
         boardService.dislikeBoard(id);
         return "redirect:/";
+    }
+
+    // API: Get filtered boards
+    @GetMapping("/boards")
+    @ResponseBody
+    public List<Board> getFilteredBoards(@RequestParam String sort) {
+        switch (sort) {
+            case "likeCount":
+                return boardService.getBoardsByLikeCount();
+            case "score":
+                return boardService.getBoardsByUserScore();
+            case "point":
+                return boardService.getBoardsByPoint();
+            default:
+                throw new IllegalArgumentException("Invalid sort option");
+        }
     }
 }

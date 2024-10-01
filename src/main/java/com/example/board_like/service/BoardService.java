@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// 프로젝트에 필요한 클래스들도 함께 추가하세요.
 import com.example.board_like.model.Board;
 import com.example.board_like.repository.BoardRepository;
 
@@ -18,18 +17,22 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
+    // Get all boards
     public List<Board> getAllBoards() {
         return boardRepository.findAll();
     }
 
+    // Save a new board
     public void saveBoard(Board board) {
         boardRepository.save(board);
     }
 
+    // Get a board by its ID
     public Board getBoardById(Long id) {
         return boardRepository.findById(id).orElseThrow();
     }
 
+    // Update an existing board
     public void updateBoard(Long id, Board updatedBoard) {
         Board board = getBoardById(id);
         board.setTitle(updatedBoard.getTitle());
@@ -39,16 +42,32 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    // Like a board
     public void likeBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow();
         board.setLikeCount(board.getLikeCount() + 1);
         boardRepository.save(board);
     }
 
+    // Dislike a board
     public void dislikeBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow();
         board.setDislikeCount(board.getDislikeCount() + 1);
         boardRepository.save(board);
     }
-}
 
+    // Get boards sorted by like count
+    public List<Board> getBoardsByLikeCount() {
+        return boardRepository.findAllByOrderByLikeCountDesc();
+    }
+
+    // Get boards sorted by points
+    public List<Board> getBoardsByPoint() {
+        return boardRepository.findAllByOrderByPointAsc();
+    }
+
+    // Get boards sorted by user score
+    public List<Board> getBoardsByUserScore() {
+        return boardRepository.findAllByUserScoreDesc();
+    }
+}
