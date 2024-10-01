@@ -19,7 +19,7 @@
 <script>
     function sortBoards() {
         const option = document.getElementById('sortOptions').value;
-        const url = 'http://localhost:8080/boards?sort=' + option;  // API 엔드포인트
+        const url = 'http://localhost:8080/boards/api?sort=' + option;  // API 엔드포인트
 
         // 서버에서 게시물 데이터를 가져오기
         fetch(url)

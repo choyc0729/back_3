@@ -21,12 +21,17 @@ public class BoardController {
         this.categoryService = categoryService;
     }
 
-    // 게시물 목록
+    // Landing page
     @GetMapping("/")
+    public String landing() {
+        return "landing";  // Serve landing.html
+    }
+
+    @GetMapping("/boards")
     public String list(Model model) {
         List<Board> boards = boardService.getAllBoards();
         model.addAttribute("boards", boards);
-        return "landing";
+        return "list";  // Serve list.html
     }
 
     // 게시물 등록 페이지
@@ -41,7 +46,7 @@ public class BoardController {
     @PostMapping("/")
     public String create(@ModelAttribute Board board) {
         boardService.saveBoard(board);
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
     // 게시물 수정 페이지
@@ -57,25 +62,25 @@ public class BoardController {
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Long id, @ModelAttribute Board board) {
         boardService.updateBoard(id, board);
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
     // 좋아요 처리
     @PostMapping("/{id}/like")
     public String likeBoard(@PathVariable Long id) {
         boardService.likeBoard(id);
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
     // 싫어요 처리
     @PostMapping("/{id}/dislike")
     public String dislikeBoard(@PathVariable Long id) {
         boardService.dislikeBoard(id);
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
     // API: Get filtered boards
-    @GetMapping("/boards")
+    @GetMapping("/boards/api")
     @ResponseBody
     public List<Board> getFilteredBoards(@RequestParam String sort) {
         switch (sort) {
@@ -88,5 +93,9 @@ public class BoardController {
             default:
                 throw new IllegalArgumentException("Invalid sort option");
         }
+    }
+    @GetMapping("/index")
+    public String indexPage() {
+        return "index";  // This will serve index.html
     }
 }
