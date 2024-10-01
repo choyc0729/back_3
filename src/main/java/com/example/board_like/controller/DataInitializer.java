@@ -20,11 +20,16 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<Category> categories = Arrays.asList(
-                //ew Category("Technology"),
-                //new Category("Health"),
-                //new Category("Science"),
-                //new Category("Education"),
-                //new Category("Entertainment")
+                //new Category("컴퓨터"),
+                //new Category("자격증"),
+                //new Category("언어"),
+                //new Category("악기"),
+                //new Category("운동"),
+                //new Category("댄스"),
+                //new Category("펫시터"),
+                //new Category("청소"),
+                //new Category("티켓팅"),
+                //new Category("촬영")
         );
 
         for (Category category : categories) {
