@@ -30,11 +30,16 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation 'org.springframework:spring-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation("org.webjars:webjars-locator-core")
+    implementation("org.webjars:sockjs-client:1.0.2")
+    implementation("org.webjars:stomp-websocket:2.3.3")
 
 
-}
-
-
-test {
-    useJUnitPlatform()
+    test {
+        useJUnitPlatform()
+    }
 }
